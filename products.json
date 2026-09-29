@@ -87,5 +87,48 @@
         "size": "15cm x 11cm x 2cm"
       }
     ]
+  },
+  {
+    "id": "HT-05",
+    "category": "pouches",
+    "name": "Magazine Holder Special Series",
+    "material": "1000D Nylon / Polymer",
+    "pattern": "Olive Drab / Tan / Green",
+    "weight": "Variant dependent",
+    "images": [
+      "images/MAGHOLDERSPECIAL.jpg",
+      "images/MAGHOLDERSPECIALTAN.jpg",
+      "images/magGRIPlongGREEN.jpg",
+      "images/magholdersmall.jpg"
+    ],
+    "shortDesc": "Modular magazine holder variation set designed for different carrying profiles and finishes.",
+    "features": [
+      "Four finish/variant configurations",
+      "Modular attachment system",
+      "Compact and long-profile compatibility",
+      "Multiple tactical colorways"
+    ],
+    "variants": [
+      {
+        "type": "MAGHOLDERSPECIAL",
+        "weight": "Variant dependent",
+        "size": "Standard profile"
+      },
+      {
+        "type": "MAGHOLDERSPECIALTAN",
+        "weight": "Variant dependent",
+        "size": "Standard profile"
+      },
+      {
+        "type": "magGRIPlongGREEN",
+        "weight": "Variant dependent",
+        "size": "Long profile"
+      },
+      {
+        "type": "magholdersmall",
+        "weight": "Variant dependent",
+        "size": "Small profile"
+      }
+    ]
   }
 ]
