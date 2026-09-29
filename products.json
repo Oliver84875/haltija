@@ -1,0 +1,91 @@
+[
+  {
+    "id": "HT-01",
+    "category": "carriers",
+    "name": "Modular Laser-Cut Plate Carrier",
+    "material": "1000D High-Density Nylon",
+    "pattern": "Woodland / M05 Camo",
+    "weight": "1.2 kg",
+    "images": [
+      "images/ht-01-plate-carrier-front.jpg",
+      "images/ht-01-plate-carrier-side.jpg"
+    ],
+    "shortDesc": "Heavy-duty low-profile plate carrier designed for modularity and high mobility.",
+    "features": [
+      "Heavy-duty 1000D Nylon",
+      "Laser-cut MOLLE",
+      "Quick-release buckles",
+      "Velcro ID panel"
+    ]
+  },
+  {
+    "id": "HT-02",
+    "category": "pouches",
+    "name": "Triple Open-Top Rifle Mag Pouch",
+    "material": "1000D Heavy-Duty Nylon",
+    "pattern": "Tactical Olive Drab",
+    "weight": "240g",
+    "images": [
+      "images/ht-02-triple-mag-pouch.jpg"
+    ],
+    "shortDesc": "Multi-functional load-bearing pouch with bungee retention.",
+    "features": [
+      "1000D Nylon",
+      "Bungee retention",
+      "Pistol mag slots",
+      "Snap-button MOLLE"
+    ]
+  },
+  {
+    "id": "HT-03",
+    "category": "patches",
+    "name": "Laser-Cut Finland Flag Tactical Patch",
+    "material": "High-Density Fabric / Rubber",
+    "pattern": "M05 Camo / Black",
+    "weight": "4g",
+    "images": [
+      "images/ht-03-finland-flag-patch.jpg"
+    ],
+    "shortDesc": "High-contrast laser-cut Finnish flag patch with hook-and-loop backing.",
+    "features": [
+      "8cm x 5cm",
+      "4g weight",
+      "Laser-cut design",
+      "Full hook-and-loop backing"
+    ]
+  },
+  {
+    "id": "HT-04",
+    "category": "pouches",
+    "name": "Modular Cord-Adjustable Mag Pouches",
+    "material": "Polymer & 1000D Nylon",
+    "pattern": "Olive Drab",
+    "weight": "50g - 160g",
+    "images": [
+      "images/ht-04-cord-mag-pouches.jpg"
+    ],
+    "shortDesc": "Adjustable mag pouch system with elastic shock cord retention and side rails.",
+    "features": [
+      "Cord adjustment",
+      "Polymer side rails",
+      "Modular mounting"
+    ],
+    "variants": [
+      {
+        "type": "Single",
+        "weight": "50g",
+        "size": "4.5cm x 11cm x 2cm"
+      },
+      {
+        "type": "Double",
+        "weight": "105g",
+        "size": "9.5cm x 11cm x 2cm"
+      },
+      {
+        "type": "Triple",
+        "weight": "160g",
+        "size": "15cm x 11cm x 2cm"
+      }
+    ]
+  }
+]
