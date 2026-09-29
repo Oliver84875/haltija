@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HALTIJA TACTICAL | Professional Tactical Gear</title>
+    <link rel="icon" type="image/jpeg" href="images/haltija-logo.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        tactical: {
+                            black: '#0d0f0e',
+                            dark: '#141716',
+                            card: '#1a1e1c',
+                            border: '#2a312d',
+                            olive: '#4b5320',
+                            accent: '#6b7a36',
+                            highlight: '#8da832',
+                            tan: '#c2b280',
+                            gray: '#8a928e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tactical: ['Chakra Petch', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0d0f0e;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .font-tactical {
+            font-family: 'Chakra Petch', sans-serif;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(107, 122, 54, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 10px; height: 10px;
+            border-top: 2px solid #8da832;
+            border-left: 2px solid #8da832;
+        }
+        .hud-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 10px; height: 10px;
+            border-bottom: 2px solid #8da832;
+            border-right: 2px solid #8da832;
+        }
+        .scanline {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.3)
+            );
+            background-size: 100% 4px;
+        }
+        /* Custom scrollbar for tactical feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #141716;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5320;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7a36;
+        }
+    </style>
+</head>
+<body class="bg-tactical-black text-slate-200 antialiased min-h-screen flex flex-col bg-grid-pattern">
+
+    <!-- TOP TACTICAL BAR -->
+    <div class="bg-tactical-dark border-b border-tactical-border text-xs py-1 px-4 text-tactical-gray flex justify-between items-center font-tactical">
+        <div class="flex items-center space-x-4">
+            <span class="inline-flex items-center text-tactical-highlight">
+                <span class="w-2 h-2 rounded-full bg-tactical-highlight animate-pulse mr-2"></span>
+                SYSTEM ONLINE // FINLAND FABRICATION
+            </span>
+            <span class="hidden md:inline">SPEC: MIL-STD 1000D NYLON</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span>LOCATION: FINLAND</span>
+            <span class="text-tactical-tan">WHOLESALE AVAILABLE</span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-tactical-black/90 backdrop-blur border-b border-tactical-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="filterCatalog('all')">
+                    <img src="images/haltija-logo.jpg" alt="Haltija Tactical logo" class="w-14 h-14 rounded-full object-cover border border-tactical-border shadow-lg shadow-tactical-olive/30">
+                    <div>
+                        <div class="font-tactical font-bold text-xl tracking-wider text-white flex items-center gap-2">
+                            HALTIJA <span class="text-tactical-highlight">TACTICAL</span>
+                        </div>
+                        <div class="text-[10px] font-tactical text-tactical-gray tracking-widest uppercase">High-Grade Modular Field Gear</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Navigation -->
+                <div class="hidden md:flex items-center space-x-8 font-tactical text-sm tracking-wider">
+                    <a href="#catalog" class="text-slate-300 hover:text-tactical-highlight transition-colors">CATALOG</a>
+                    <a href="#specifications" class="text-slate-300 hover:text-tactical-highlight transition-colors">SPECS & MATERIALS</a>
+                    <a href="#inquiry" class="text-slate-300 hover:text-tactical-highlight transition-colors">WHOLESALE</a>
+                    <a href="#about" class="text-slate-300 hover:text-tactical-highlight transition-colors">ABOUT US</a>
+                </div>
+
+                <!-- Cart Button & Quick Action -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleCartDrawer()" class="relative p-2.5 bg-tactical-card border border-tactical-border hover:border-tactical-highlight rounded text-tactical-highlight transition-colors">
+                        <i class="fa-solid fa-crosshairs text-lg"></i>
+                        <span class="hidden sm:inline-block ml-2 font-tactical text-xs font-semibold">LOADOUT</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-tactical-highlight text-tactical-black font-bold font-tactical text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="openQuoteModal()" class="hidden sm:inline-flex items-center px-4 py-2 bg-tactical-olive hover:bg-tactical-accent text-white font-tactical text-xs font-bold tracking-wider rounded transition-all shadow-md">
+                        REQUEST QUOTE
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 bg-tactical-card border border-tactical-border hover:border-tactical-highlight rounded text-slate-300" aria-label="Open menu">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden border-t border-tactical-border bg-tactical-black font-tactical text-sm tracking-wider">
+            <div class="px-4 py-3 flex flex-col gap-1">
+                <a href="#catalog" onclick="toggleMobileMenu(false)" class="py-2 text-slate-300 hover:text-tactical-highlight">CATALOG</a>
+                <a href="#specifications" onclick="toggleMobileMenu(false)" class="py-2 text-slate-300 hover:text-tactical-highlight">SPECS & MATERIALS</a>
+                <a href="#inquiry" onclick="toggleMobileMenu(false)" class="py-2 text-slate-300 hover:text-tactical-highlight">WHOLESALE</a>
+                <a href="#about" onclick="toggleMobileMenu(false)" class="py-2 text-slate-300 hover:text-tactical-highlight">ABOUT US</a>
+                <button onclick="toggleMobileMenu(false); openQuoteModal()" class="mt-2 py-3 bg-tactical-olive hover:bg-tactical-accent text-white text-xs font-bold rounded">REQUEST QUOTE</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative bg-tactical-dark border-b border-tactical-border overflow-hidden py-16 lg:py-24">
+        <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-tactical-olive/30 border border-tactical-olive text-tactical-highlight text-xs font-tactical font-semibold tracking-widest uppercase">
+                        <i class="fa-solid fa-shield-halved"></i> BASED IN FINLAND
+                    </div>
+                    <h1 class="font-tactical text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-none uppercase">
+                        BUILT FOR THE FIELD. <br>
+                        <span class="text-tactical-highlight">ENGINEERED FOR MISSION SUCCESS.</span>
+                    </h1>
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                        Precision laser-cut tactical load-bearing platforms, heavy-duty 1000D Nylon modular pouches, and specialized identification gear built to endure punishing environments.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap gap-4 font-tactical">
+                        <a href="#catalog" class="px-6 py-3.5 bg-tactical-highlight hover:bg-tactical-accent text-tactical-black font-bold text-sm tracking-wider uppercase rounded transition-all shadow-lg shadow-tactical-highlight/20 flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group"></i> Explore Tactical Catalog
+                        </a>
+                        <button onclick="openQuoteModal()" class="px-6 py-3.5 bg-tactical-card hover:bg-tactical-border text-white border border-tactical-border hover:border-tactical-highlight font-bold text-sm tracking-wider uppercase rounded transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-file-signature"></i> Request a Quote
+                        </button>
+                    </div>
+
+                    <!-- Tech specs callouts -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-tactical-border/60 text-xs font-tactical">
+                        <div>
+                            <div class="text-tactical-highlight font-bold text-base">1000D NYLON</div>
+                            <div class="text-tactical-gray">High Abrasion Resistance</div>
+                        </div>
+                        <div>
+                            <div class="text-tactical-highlight font-bold text-base">M05 CAMO</div>
+                            <div class="text-tactical-gray">Finnish Field Compatible</div>
+                        </div>
+                        <div>
+                            <div class="text-tactical-highlight font-bold text-base">LASER-CUT</div>
+                            <div class="text-tactical-gray">Low-Profile MOLLE System</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic / Featured Frame -->
+                <div class="lg:col-span-5">
+                    <div class="relative hud-border p-4 bg-tactical-card border border-tactical-border rounded-lg shadow-2xl">
+                        <div class="absolute top-2 right-2 bg-tactical-black/80 px-2 py-1 text-[10px] font-tactical text-tactical-highlight border border-tactical-border z-10">
+                            FEATURED PLATFORM // HT-01
+                        </div>
+                        <img src="images/ht-01-plate-carrier-front.jpg" alt="HT-01 Modular Laser-Cut Plate Carrier, front view" class="w-full h-80 sm:h-96 object-contain object-center rounded bg-white cursor-pointer" onclick="openProductModal('HT-01')">
+                        <div class="mt-4 flex justify-between items-center border-t border-tactical-border pt-3">
+                            <div>
+                                <h3 class="font-tactical text-white font-bold text-base">HT-01 PLATE CARRIER</h3>
+                                <p class="text-xs text-tactical-gray">1000D Nylon • Quick-Release Buckles</p>
+                            </div>
+                            <button onclick="openProductModal('HT-01')" class="px-3 py-1.5 bg-tactical-olive hover:bg-tactical-accent text-white text-xs font-tactical font-semibold rounded">
+                                VIEW SPECS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CATALOG SECTION -->
+    <section id="catalog" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-tactical-border">
+            <div>
+                <div class="text-tactical-highlight font-tactical text-xs tracking-widest uppercase mb-1">// HARDWARE INVENTORY</div>
+                <h2 class="font-tactical text-3xl font-bold text-white uppercase tracking-tight">TACTICAL GEAR CATALOG</h2>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="mt-4 md:mt-0 flex flex-wrap gap-2 font-tactical text-xs">
+                <button onclick="filterCatalog('all')" id="filter-all" class="filter-btn px-4 py-2 bg-tactical-highlight text-tactical-black font-bold rounded transition-all">
+                    ALL GEAR
+                </button>
+                <button onclick="filterCatalog('carriers')" id="filter-carriers" class="filter-btn px-4 py-2 bg-tactical-card hover:bg-tactical-border text-slate-300 rounded transition-all border border-tactical-border">
+                    PLATE CARRIERS
+                </button>
+                <button onclick="filterCatalog('pouches')" id="filter-pouches" class="filter-btn px-4 py-2 bg-tactical-card hover:bg-tactical-border text-slate-300 rounded transition-all border border-tactical-border">
+                    MAG POUCHES
+                </button>
+                <button onclick="filterCatalog('patches')" id="filter-patches" class="filter-btn px-4 py-2 bg-tactical-card hover:bg-tactical-border text-slate-300 rounded transition-all border border-tactical-border">
+                    PATCHES & ACCESSORIES
+                </button>
+            </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Dynamic JavaScript Rendering Target -->
+        </div>
+    </section>
+
+    <!-- TECHNICAL SPECS SECTION -->
+    <section id="specifications" class="py-16 bg-tactical-dark border-y border-tactical-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-tactical-highlight font-tactical text-xs tracking-widest uppercase">// MATERIAL & CONSTRUCTION</span>
+                <h2 class="font-tactical text-3xl font-bold text-white uppercase mt-1">ENGINEERED FOR EXTREME USAGE</h2>
+                <p class="text-slate-400 text-sm mt-2">Haltija Tactical equipment uses heavy-duty tactical standard components designed to withstand weather, tension, and field friction.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Spec Card 1 -->
+                <div class="p-6 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                    <div class="w-12 h-12 bg-tactical-olive/30 text-tactical-highlight rounded border border-tactical-olive flex items-center justify-center font-tactical text-xl font-bold mb-4">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+                    <h3 class="font-tactical text-lg font-bold text-white mb-2">1000D HIGH-DENSITY NYLON</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Constructed using 1000D Cordura-grade high-density weave fabric delivering superior resistance against abrasions, tears, water absorption, and harsh wilderness conditions.
+                    </p>
+                </div>
+
+                <!-- Spec Card 2 -->
+                <div class="p-6 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                    <div class="w-12 h-12 bg-tactical-olive/30 text-tactical-highlight rounded border border-tactical-olive flex items-center justify-center font-tactical text-xl font-bold mb-4">
+                        <i class="fa-solid fa-vector-square"></i>
+                    </div>
+                    <h3 class="font-tactical text-lg font-bold text-white mb-2">LASER-CUT MOLLE PLATFORM</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Precision CNC laser-cut slot array replaces standard heavy webbing. Reduces total weight while maintaining structural integrity and low visual profile.
+                    </p>
+                </div>
+
+                <!-- Spec Card 3 -->
+                <div class="p-6 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                    <div class="w-12 h-12 bg-tactical-olive/30 text-tactical-highlight rounded border border-tactical-olive flex items-center justify-center font-tactical text-xl font-bold mb-4">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-tactical text-lg font-bold text-white mb-2">RAPID QUICK-RELEASE BUCKLES</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Includes high-tensile polymer quick-disconnect hardware on shoulders and cummerbund for instant emergency doffing and reliable tactical entry.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHOLESALE / ORDER INQUIRY SECTION -->
+    <section id="inquiry" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-tactical-card border border-tactical-border rounded-lg overflow-hidden p-6 lg:p-10 hud-border">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="text-tactical-highlight font-tactical text-xs tracking-widest uppercase">// WHOLESALE & AGENCY INQUIRIES</div>
+                    <h2 class="font-tactical text-3xl font-bold text-white uppercase">CONTACT HALTIJA TACTICAL</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Need bulk procurement for tactical units, retail distribution, or custom team gear? Submit your requested loadout or direct order requirements below.
+                    </p>
+
+                    <div class="pt-4 space-y-3 font-tactical text-xs">
+                        <div class="flex items-center gap-3 text-slate-300">
+                            <i class="fa-solid fa-envelope text-tactical-highlight w-5 text-center"></i>
+                            <span>sales@haltijatactical.com</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-300">
+                            <i class="fa-solid fa-globe text-tactical-highlight w-5 text-center"></i>
+                            <span>www.haltijatactical.com</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-300">
+                            <i class="fa-solid fa-location-dot text-tactical-highlight w-5 text-center"></i>
+                            <span>Finland / Northern European Distribution</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <form name="wholesale-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleFormSubmit(event)" class="space-y-4 font-tactical">
+                        <input type="hidden" name="form-name" value="wholesale-inquiry">
+                        <input type="hidden" name="subject" value="New wholesale inquiry – Haltija Tactical">
+                        <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-tactical-gray mb-1 uppercase">Name / Officer</label>
+                                <input type="text" name="name" required autocomplete="name" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-tactical-gray mb-1 uppercase">Organization / Unit</label>
+                                <input type="text" name="organization" autocomplete="organization" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="Security / Retailer / Individual">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-tactical-gray mb-1 uppercase">Email Address</label>
+                                <input type="email" name="email" required autocomplete="email" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="contact@domain.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-tactical-gray mb-1 uppercase">Inquiry Type</label>
+                                <select name="inquiry_type" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none">
+                                    <option>Wholesale Order</option>
+                                    <option>Custom Unit Procurement</option>
+                                    <option>Product Inquiry</option>
+                                    <option>Sample Request</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-tactical-gray mb-1 uppercase">Order Details & Quantities</label>
+                            <textarea id="inquiry-message" name="message" rows="4" required class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="Specify item codes (e.g., HT-01, HT-03) and requested quantities..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-tactical-highlight hover:bg-tactical-accent disabled:opacity-60 disabled:cursor-wait text-tactical-black font-bold text-sm tracking-wider uppercase rounded transition-all">
+                            SEND OFFICIAL INQUIRY
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-16 bg-tactical-dark border-t border-tactical-border scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <div class="lg:col-span-4 flex justify-center">
+                    <img src="images/haltija-logo.jpg" alt="Haltija Tactical guardian spirit emblem" class="w-64 h-64 lg:w-80 lg:h-80 rounded-full object-cover border border-tactical-border shadow-2xl shadow-tactical-highlight/10">
+                </div>
+                <div class="lg:col-span-8 space-y-5">
+                    <div>
+                        <span class="text-tactical-highlight font-tactical text-xs tracking-widest uppercase">// ABOUT US</span>
+                        <h2 class="font-tactical text-3xl font-bold text-white uppercase mt-1">OUR STORY | HALTIJA <span class="text-tactical-highlight">TACTICAL</span></h2>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Founded in Finland, HALTIJA TACTICAL was born from a shared vision between three founders: Oliver, Leevi, and Tomi. What began as a concept during an entrepreneurship course quickly evolved into a dedicated mission to design and deliver reliable, high-performance tactical gear.
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Driven by a collective passion for the military, armed forces, and active airsoft sports, our team understands the demands placed on gear in rugged, real-world conditions. Oliver brings a focus on firearms, weapon mechanics, and fundamental safety protocols, ensuring our design philosophy emphasizes functional utility, security, and precision. Combined with Leevi and Tomi&rsquo;s deep knowledge of tactical equipment, loadout configurations, and modular setups, HALTIJA TACTICAL is built on practical experience and a commitment to quality.
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Inspired by Finnish nature and the spirit of the haltija&mdash;the legendary guardian spirit and protector&mdash;we engineer equipment built to withstand tough environments. Whether on the field or in training, HALTIJA TACTICAL provides modern operators and enthusiasts with gear engineered for mission success.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <h3 class="font-tactical text-sm font-bold text-tactical-highlight tracking-widest uppercase mb-4">// KEY HIGHLIGHTS</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-5 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                        <i class="fa-solid fa-location-dot text-tactical-highlight text-lg mb-3"></i>
+                        <h4 class="font-tactical text-sm font-bold text-white uppercase mb-1">Origin</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Developed out of a Finnish entrepreneurship program.</p>
+                    </div>
+                    <div class="p-5 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                        <i class="fa-solid fa-users text-tactical-highlight text-lg mb-3"></i>
+                        <h4 class="font-tactical text-sm font-bold text-white uppercase mb-1">Founders</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Oliver, Leevi, and Tomi.</p>
+                    </div>
+                    <div class="p-5 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                        <i class="fa-solid fa-crosshairs text-tactical-highlight text-lg mb-3"></i>
+                        <h4 class="font-tactical text-sm font-bold text-white uppercase mb-1">Core Expertise</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Tactical equipment, airsoft configurations, military gear, and firearm safety principles.</p>
+                    </div>
+                    <div class="p-5 bg-tactical-card border border-tactical-border rounded-lg hud-border">
+                        <i class="fa-solid fa-shield-halved text-tactical-highlight text-lg mb-3"></i>
+                        <h4 class="font-tactical text-sm font-bold text-white uppercase mb-1">Brand Philosophy</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Finnish heritage, modular durability, and field-tested performance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-tactical-black border-t border-tactical-border py-8 text-xs font-tactical text-tactical-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <img src="images/haltija-logo.jpg" alt="Haltija Tactical logo" class="w-8 h-8 rounded-full object-cover">
+                <span class="text-white font-bold">HALTIJA TACTICAL</span>
+                <span>© 2026. ALL RIGHTS RESERVED.</span>
+            </div>
+            <div>
+                HIGH-PERFORMANCE TACTICAL GEAR & EQUIPMENT CATALOG
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" onclick="if (event.target === this) closeProductModal()">
+        <div class="bg-tactical-card border border-tactical-border rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto hud-border p-6 relative">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-tactical-gray hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modal-content">
+                <!-- JavaScript injects detail data -->
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUEST QUOTE MODAL -->
+    <div id="quote-modal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" onclick="if (event.target === this) closeQuoteModal()">
+        <div class="bg-tactical-card border border-tactical-border rounded-lg max-w-2xl w-full max-h-[92vh] overflow-y-auto hud-border p-6 relative">
+            <button onclick="closeQuoteModal()" class="absolute top-4 right-4 text-tactical-gray hover:text-white text-xl" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="quote-form-view">
+                <div class="mb-5 pr-8">
+                    <div class="text-tactical-highlight font-tactical text-xs tracking-widest uppercase">// QUOTE REQUEST</div>
+                    <h2 class="font-tactical text-2xl font-bold text-white uppercase">REQUEST A QUOTE</h2>
+                    <p class="text-xs text-slate-400 mt-1">Choose the products you're interested in, tell us how to reach you, and we'll reply with pricing and delivery time.</p>
+                </div>
+
+                <form id="quote-form" name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleQuoteSubmit(event)" class="space-y-5 font-tactical">
+                    <input type="hidden" name="form-name" value="quote-request">
+                    <input type="hidden" name="subject" value="New quote request – Haltija Tactical">
+                    <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+                    <textarea name="products" id="quote-products-field" class="hidden" aria-hidden="true" tabindex="-1"></textarea>
+                    <input type="hidden" name="total_items" id="quote-total-field">
+
+                    <!-- Step 1: Products -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-5 h-5 rounded-full bg-tactical-highlight text-tactical-black text-[11px] font-bold flex items-center justify-center">1</span>
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Products you're looking for</span>
+                        </div>
+                        <div id="quote-product-list" class="space-y-2">
+                            <!-- JavaScript renders product selectors -->
+                        </div>
+                        <p id="quote-product-error" class="hidden text-xs text-red-400 mt-2"><i class="fa-solid fa-triangle-exclamation"></i> Please choose at least one product.</p>
+                    </div>
+
+                    <!-- Step 2: Contact info -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-5 h-5 rounded-full bg-tactical-highlight text-tactical-black text-[11px] font-bold flex items-center justify-center">2</span>
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Your information</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label for="q-name" class="block text-xs text-tactical-gray mb-1 uppercase">Full name *</label>
+                                <input id="q-name" type="text" name="name" required autocomplete="name" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label for="q-email" class="block text-xs text-tactical-gray mb-1 uppercase">Email *</label>
+                                <input id="q-email" type="email" name="email" required autocomplete="email" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="you@example.com">
+                            </div>
+                            <div>
+                                <label for="q-phone" class="block text-xs text-tactical-gray mb-1 uppercase">Phone</label>
+                                <input id="q-phone" type="tel" name="phone" autocomplete="tel" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="+358 40 123 4567">
+                            </div>
+                            <div>
+                                <label for="q-country" class="block text-xs text-tactical-gray mb-1 uppercase">Country *</label>
+                                <input id="q-country" type="text" name="country" required autocomplete="country-name" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="Finland">
+                            </div>
+                            <div>
+                                <label for="q-org" class="block text-xs text-tactical-gray mb-1 uppercase">Organization / Company</label>
+                                <input id="q-org" type="text" name="organization" autocomplete="organization" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="Optional">
+                            </div>
+                            <div>
+                                <label for="q-type" class="block text-xs text-tactical-gray mb-1 uppercase">I am a</label>
+                                <select id="q-type" name="customer_type" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none">
+                                    <option>Individual buyer</option>
+                                    <option>Retailer / Reseller</option>
+                                    <option>Security company / Agency</option>
+                                    <option>Reservist / Club / Team</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Details -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-5 h-5 rounded-full bg-tactical-highlight text-tactical-black text-[11px] font-bold flex items-center justify-center">3</span>
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Anything else?</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <label for="q-timeline" class="block text-xs text-tactical-gray mb-1 uppercase">When do you need it?</label>
+                                <select id="q-timeline" name="timeline" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none">
+                                    <option>As soon as possible</option>
+                                    <option>Within 1 month</option>
+                                    <option>In 1–3 months</option>
+                                    <option>Just checking prices</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="q-message" class="block text-xs text-tactical-gray mb-1 uppercase">Message</label>
+                                <textarea id="q-message" name="message" rows="3" class="w-full bg-tactical-black border border-tactical-border focus:border-tactical-highlight rounded p-2.5 text-sm text-white focus:outline-none" placeholder="Colors, sizes, custom requests, delivery address city..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-tactical-highlight hover:bg-tactical-accent disabled:opacity-60 disabled:cursor-wait text-tactical-black font-bold text-sm tracking-wider uppercase rounded transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> <span>SEND QUOTE REQUEST</span>
+                    </button>
+                    <p class="text-[11px] text-tactical-gray text-center">We only use your details to reply to this request.</p>
+                </form>
+            </div>
+
+            <!-- Success View -->
+            <div id="quote-success-view" class="hidden text-center py-10 font-tactical">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-tactical-olive/40 border border-tactical-highlight flex items-center justify-center text-tactical-highlight text-2xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white uppercase">QUOTE REQUEST SENT</h2>
+                <p class="text-sm text-slate-400 mt-2 max-w-md mx-auto">Thanks! We've received your request and will get back to you by email as soon as possible.</p>
+                <button onclick="closeQuoteModal()" class="mt-6 px-6 py-3 bg-tactical-olive hover:bg-tactical-accent text-white text-xs font-bold uppercase rounded">BACK TO CATALOG</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] hidden px-4 py-3 rounded border font-tactical text-xs shadow-2xl"></div>
+
+    <!-- CART / LOADOUT DRAWER -->
+    <div id="cart-overlay" class="fixed inset-0 z-40 bg-black/60 hidden" onclick="toggleCartDrawer(false, true)"></div>
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-tactical-dark border-l border-tactical-border transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-4 bg-tactical-black border-b border-tactical-border flex justify-between items-center font-tactical">
+            <div class="flex items-center gap-2 text-white font-bold">
+                <i class="fa-solid fa-crosshairs text-tactical-highlight"></i>
+                <span>CURRENT LOADOUT (ORDER)</span>
+            </div>
+            <button onclick="toggleCartDrawer()" class="text-tactical-gray hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-grow p-4 overflow-y-auto space-y-3 font-tactical">
+            <!-- Dynamic Cart Items -->
+        </div>
+
+        <div class="p-4 bg-tactical-black border-t border-tactical-border font-tactical space-y-3">
+            <div class="flex justify-between text-xs text-tactical-gray">
+                <span>ESTIMATED ITEMS:</span>
+                <span id="cart-total-qty" class="text-white font-bold">0</span>
+            </div>
+            <button onclick="quoteFromCart()" class="w-full py-3 bg-tactical-highlight hover:bg-tactical-accent text-tactical-black font-bold text-xs tracking-wider uppercase rounded transition-all">
+                <i class="fa-solid fa-file-signature"></i> REQUEST QUOTE FOR LOADOUT
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Catalog Products Data
+        const products = [
+            {
+                id: 'HT-01',
+                category: 'carriers',
+                name: 'Modular Laser-Cut Plate Carrier',
+                material: '1000D High-Density Nylon',
+                pattern: 'Woodland / M05 Camo',
+                weight: '1.2 kg',
+                images: ['images/ht-01-plate-carrier-front.jpg', 'images/ht-01-plate-carrier-side.jpg'],
+                shortDesc: 'Heavy-duty low-profile plate carrier with precision laser-cut MOLLE and rapid quick-release buckles.',
+                features: [
+                    'Heavy-duty 1000D Nylon fabric construction for maximum tear & water resistance',
+                    'Laser-cut MOLLE/PALS platform for streamlined pouch integration',
+                    'Quick-release shoulder and cummerbund buckles for instant emergency doffing',
+                    'Finnish M05 / Woodland camouflage pattern',
+                    'Integrated upper chest loop velcro panel for flags and callsign patches'
+                ]
+            },
+            {
+                id: 'HT-02',
+                category: 'pouches',
+                name: 'Triple Open-Top Rifle Mag Pouch',
+                material: '1000D Heavy-Duty Nylon',
+                pattern: 'Tactical Olive Drab',
+                weight: '240g',
+                images: ['images/ht-02-triple-mag-pouch.jpg'],
+                shortDesc: 'Multi-functional load-bearing pouch designed for rapid mag changes with integrated secondary slots.',
+                features: [
+                    '1000D Nylon durable construction',
+                    'Bungee retention pull-tabs for positive magazine lock',
+                    'Front-facing integrated pistol mag slots',
+                    'Snap-button MOLLE attachment webbing on back panel'
+                ]
+            },
+            {
+                id: 'HT-03',
+                category: 'patches',
+                name: 'Laser-Cut Finland Flag Tactical Patch',
+                material: 'Laser-Cut Cordura / Velcro Hook',
+                pattern: 'High-Contrast FIN / M05 Camo',
+                weight: '4g',
+                dimensions: '8cm x 5cm (3.15" x 1.97")',
+                images: ['images/ht-03-finland-flag-patch.jpg'],
+                shortDesc: 'Precision laser-engraved Finland tactical flag patch with full hook-and-loop backing.',
+                features: [
+                    'Dimensions: 8cm x 5cm (3.15" x 1.97")',
+                    'Ultra-lightweight: 4g weight',
+                    'Laser-cut FIN & Flag design over Finnish camo pattern',
+                    'Full hook-and-loop backing for plate carriers, hats, or packs'
+                ]
+            },
+            {
+                id: 'HT-04',
+                category: 'pouches',
+                name: 'Modular Cord-Adjustable Mag Pouches',
+                material: 'Polymer Rails & High-Elastic Cord',
+                pattern: 'Tactical Olive Drab',
+                images: ['images/ht-04-cord-mag-pouches.jpg'],
+                shortDesc: 'Active tension adjustable mag pouches available in single, double, and triple configurations.',
+                variants: [
+                    { type: 'Single Pouch', size: '4.5cm x 11cm x 2cm', weight: '50g' },
+                    { type: 'Double Pouch', size: '9.5cm x 11cm x 2cm', weight: '105g' },
+                    { type: 'Triple Pouch', size: '15cm x 11cm x 2cm', weight: '160g' }
+                ],
+                features: [
+                    'Elastic shock cord retention with active side rail tensioners',
+                    'Available in Single (50g), Double (105g), and Triple (160g) sizes',
+                    'Universal magazine compatibility (9mm, .45, standard pistol mags)',
+                    'Heavy duty clip attachment system'
+                ]
+            }
+        ];
+
+        const PLACEHOLDER = id => `https://placehold.co/400x300/1e2421/8da832?text=${encodeURIComponent(id)}`;
+        const findProduct = id => products.find(p => p.id === id);
+
+        // Loadout is saved in the browser so it survives page reloads
+        let cart = [];
+        try {
+            cart = (JSON.parse(localStorage.getItem('haltija-loadout')) || []).filter(c => findProduct(c.id));
+        } catch (e) {
+            cart = [];
+        }
+
+        // Selected products in the quote form: { [id]: { qty, variant } }
+        let quoteSelection = {};
+
+        // Initialize Catalog View
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalog(products);
+            updateCartUI();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeQuoteModal();
+                closeProductModal();
+                toggleCartDrawer(false);
+            }
+        });
+
+        // Render Catalog Grid Cards
+        function renderCatalog(items) {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-tactical-card border border-tactical-border rounded-lg overflow-hidden flex flex-col justify-between hover:border-tactical-highlight transition-all hud-border group';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative bg-white overflow-hidden h-56 flex items-center justify-center p-2 cursor-pointer" onclick="openProductModal('${item.id}')">
+                            <span class="absolute top-2 left-2 z-10 bg-tactical-black/80 px-2 py-0.5 text-[10px] font-tactical text-tactical-highlight border border-tactical-border">
+                                ${item.id}
+                            </span>
+                            ${item.images.length > 1 ? `<span class="absolute top-2 right-2 z-10 bg-tactical-black/80 px-2 py-0.5 text-[10px] font-tactical text-slate-300 border border-tactical-border"><i class="fa-solid fa-images"></i> ${item.images.length}</span>` : ''}
+                            <img src="${item.images[0]}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" loading="lazy" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+                            <div class="text-[10px] font-tactical text-tactical-tan uppercase mb-1">${item.pattern || 'TACTICAL GEAR'}</div>
+                            <h3 class="font-tactical text-white font-bold text-base leading-snug mb-2">${item.name}</h3>
+                            <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">${item.shortDesc}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 font-tactical space-y-2">
+                        <div class="flex gap-2">
+                            <button onclick="openProductModal('${item.id}')" class="flex-1 py-2 bg-tactical-dark hover:bg-tactical-border text-white text-xs font-semibold rounded border border-tactical-border transition-colors">
+                                SPECS
+                            </button>
+                            <button onclick="addToCart('${item.id}')" class="px-3 py-2 bg-tactical-olive hover:bg-tactical-accent text-white text-xs font-semibold rounded transition-colors flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-plus"></i> LOAD
+                            </button>
+                        </div>
+                        <button onclick="openQuoteModal(['${item.id}'])" class="w-full py-2 bg-tactical-highlight/10 hover:bg-tactical-highlight hover:text-tactical-black text-tactical-highlight text-xs font-bold rounded border border-tactical-highlight/60 transition-colors">
+                            <i class="fa-solid fa-file-signature"></i> REQUEST QUOTE
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter Functionality
+        function filterCatalog(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = 'filter-btn px-4 py-2 bg-tactical-card hover:bg-tactical-border text-slate-300 rounded transition-all border border-tactical-border';
+            });
+
+            const activeBtn = document.getElementById(`filter-${category}`);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn px-4 py-2 bg-tactical-highlight text-tactical-black font-bold rounded transition-all';
+            }
+
+            if (category === 'all') {
+                renderCatalog(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderCatalog(filtered);
+            }
+        }
+
+        // Open Modal Details
+        function openProductModal(productId) {
+            const item = findProduct(productId);
+            if (!item) return;
+
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="bg-white rounded border border-tactical-border p-2 mb-3">
+                            <img id="modal-main-image" src="${item.images[0]}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" class="w-full h-72 object-contain">
+                        </div>
+                        ${item.images.length > 1 ? `
+                            <div class="text-xs font-tactical text-tactical-gray mb-1">MORE VIEWS:</div>
+                            <div class="grid grid-cols-4 gap-2">
+                                ${item.images.map((src, i) => `
+                                    <button onclick="setModalImage('${src}', this)" class="modal-thumb bg-white rounded border-2 ${i === 0 ? 'border-tactical-highlight' : 'border-tactical-border'} p-1 hover:border-tactical-highlight transition-colors">
+                                        <img src="${src}" alt="${item.name} view ${i + 1}" class="w-full h-16 object-contain">
+                                    </button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="space-y-4 font-tactical">
+                        <div>
+                            <span class="bg-tactical-olive px-2 py-0.5 text-xs font-bold text-white uppercase">${item.id}</span>
+                            <h2 class="text-2xl font-bold text-white uppercase mt-1">${item.name}</h2>
+                            <p class="text-xs text-tactical-highlight mt-0.5">${item.material}${item.weight ? ` • ${item.weight}` : ''}</p>
+                        </div>
+
+                        <div class="text-xs text-slate-300 leading-relaxed">
+                            ${item.shortDesc}
+                        </div>
+
+                        ${item.variants ? `
+                            <div class="border-t border-b border-tactical-border py-3 space-y-2">
+                                <div class="text-xs text-tactical-tan font-bold uppercase">AVAILABLE CONFIGURATIONS:</div>
+                                ${item.variants.map(v => `
+                                    <div class="flex justify-between text-xs bg-tactical-black p-2 rounded border border-tactical-border">
+                                        <span class="text-white font-semibold">${v.type}</span>
+                                        <span class="text-tactical-gray">${v.size} (${v.weight})</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                        <div>
+                            <h4 class="text-xs font-bold text-white uppercase mb-2">TECHNICAL FEATURES:</h4>
+                            <ul class="space-y-1.5 text-xs text-slate-300">
+                                ${item.features.map(f => `
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-check text-tactical-highlight mt-0.5"></i>
+                                        <span>${f}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="pt-4 flex flex-col sm:flex-row gap-3">
+                            <button onclick="closeProductModal(); openQuoteModal(['${item.id}']);" class="flex-1 py-3 bg-tactical-highlight hover:bg-tactical-accent text-tactical-black font-bold text-xs uppercase rounded transition-all">
+                                <i class="fa-solid fa-file-signature"></i> REQUEST QUOTE
+                            </button>
+                            <button onclick="addToCart('${item.id}'); closeProductModal();" class="flex-1 py-3 bg-tactical-olive hover:bg-tactical-accent text-white font-bold text-xs uppercase rounded transition-all">
+                                <i class="fa-solid fa-plus"></i> ADD TO LOADOUT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function setModalImage(src, thumb) {
+            document.getElementById('modal-main-image').src = src;
+            document.querySelectorAll('.modal-thumb').forEach(t => {
+                t.classList.remove('border-tactical-highlight');
+                t.classList.add('border-tactical-border');
+            });
+            thumb.classList.remove('border-tactical-border');
+            thumb.classList.add('border-tactical-highlight');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Cart Loadout Management
+        function saveCart() {
+            try {
+                localStorage.setItem('haltija-loadout', JSON.stringify(cart.map(c => ({ id: c.id, qty: c.qty }))));
+            } catch (e) { /* storage unavailable */ }
+        }
+
+        function addToCart(productId) {
+            if (!findProduct(productId)) return;
+
+            const existing = cart.find(c => c.id === productId);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ id: productId, qty: 1 });
+            }
+
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        function changeCartQty(productId, delta) {
+            const entry = cart.find(c => c.id === productId);
+            if (!entry) return;
+            entry.qty = Math.max(1, entry.qty + delta);
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(c => c.id !== productId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            saveCart();
+            const cartContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const totalQty = document.getElementById('cart-total-qty');
+
+            const total = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartCount.textContent = total;
+            totalQty.textContent = total;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="text-center py-12 text-tactical-gray">
+                        <i class="fa-solid fa-box-open text-3xl mb-2"></i>
+                        <p class="text-xs">NO ITEMS IN LOADOUT</p>
+                        <p class="text-[10px] mt-1">Press "LOAD" on a product to add it here.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            cartContainer.innerHTML = cart.map(entry => {
+                const item = findProduct(entry.id);
+                return `
+                <div class="bg-tactical-black p-3 rounded border border-tactical-border flex gap-3 items-center">
+                    <img src="${item.images[0]}" alt="" class="w-14 h-14 object-contain bg-white rounded">
+                    <div class="flex-grow min-w-0">
+                        <div class="text-xs text-tactical-highlight font-bold">${item.id}</div>
+                        <div class="text-xs text-white font-semibold leading-tight truncate">${item.name}</div>
+                        <div class="mt-1.5 inline-flex items-center border border-tactical-border rounded">
+                            <button onclick="changeCartQty('${item.id}', -1)" class="px-2 py-0.5 text-slate-300 hover:text-white" aria-label="Decrease quantity"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                            <span class="px-2 text-xs text-white">${entry.qty}</span>
+                            <button onclick="changeCartQty('${item.id}', 1)" class="px-2 py-0.5 text-slate-300 hover:text-white" aria-label="Increase quantity"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1" aria-label="Remove">
+                        <i class="fa-solid fa-trash-can text-sm"></i>
+                    </button>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (typeof open !== 'boolean') {
+                open = drawer.classList.contains('translate-x-full');
+            }
+            drawer.classList.toggle('translate-x-full', !open);
+            overlay.classList.toggle('hidden', !open);
+        }
+
+        function quoteFromCart() {
+            toggleCartDrawer(false);
+            const selection = {};
+            cart.forEach(c => { selection[c.id] = { qty: c.qty, variant: '' }; });
+            openQuoteModal(null, selection);
+        }
+
+        function toggleMobileMenu(open) {
+            const menu = document.getElementById('mobile-menu');
+            if (typeof open !== 'boolean') open = menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !open);
+        }
+
+        // Quote Request Modal
+        function openQuoteModal(productIds, selection) {
+            if (selection) {
+                quoteSelection = selection;
+            } else if (productIds && productIds.length) {
+                quoteSelection = {};
+                productIds.forEach(id => { quoteSelection[id] = { qty: 1, variant: '' }; });
+            } else if (Object.keys(quoteSelection).length === 0 && cart.length) {
+                cart.forEach(c => { quoteSelection[c.id] = { qty: c.qty, variant: '' }; });
+            }
+
+            document.getElementById('quote-form-view').classList.remove('hidden');
+            document.getElementById('quote-success-view').classList.add('hidden');
+            document.getElementById('quote-product-error').classList.add('hidden');
+            renderQuoteProducts();
+
+            const modal = document.getElementById('quote-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeQuoteModal() {
+            const modal = document.getElementById('quote-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function renderQuoteProducts() {
+            const list = document.getElementById('quote-product-list');
+            list.innerHTML = products.map(item => {
+                const sel = quoteSelection[item.id];
+                const checked = Boolean(sel);
+                return `
+                <div class="rounded border ${checked ? 'border-tactical-highlight bg-tactical-olive/10' : 'border-tactical-border bg-tactical-black'} p-2.5 flex flex-wrap items-center gap-3 transition-colors">
+                    <label class="flex items-center gap-3 flex-grow min-w-[200px] cursor-pointer">
+                        <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleQuoteProduct('${item.id}', this.checked)" class="w-4 h-4 accent-[#8da832]">
+                        <img src="${item.images[0]}" alt="" class="w-12 h-12 object-contain bg-white rounded">
+                        <span>
+                            <span class="block text-[10px] text-tactical-highlight font-bold">${item.id}</span>
+                            <span class="block text-xs text-white font-semibold leading-tight">${item.name}</span>
+                        </span>
+                    </label>
+                    ${checked ? `
+                        <div class="flex items-center gap-2 ml-auto">
+                            ${item.variants ? `
+                                <select onchange="quoteSelection['${item.id}'].variant = this.value" class="bg-tactical-black border border-tactical-border rounded p-1.5 text-xs text-white focus:outline-none focus:border-tactical-highlight" aria-label="Configuration">
+                                    <option value="">Size: not sure</option>
+                                    ${item.variants.map(v => `<option ${sel.variant === v.type ? 'selected' : ''}>${v.type}</option>`).join('')}
+                                </select>
+                            ` : ''}
+                            <label class="text-[10px] text-tactical-gray uppercase">Qty</label>
+                            <input type="number" min="1" value="${sel.qty}" onchange="quoteSelection['${item.id}'].qty = Math.max(1, parseInt(this.value, 10) || 1); this.value = quoteSelection['${item.id}'].qty" class="w-20 bg-tactical-black border border-tactical-border rounded p-1.5 text-xs text-white focus:outline-none focus:border-tactical-highlight" aria-label="Quantity">
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            }).join('');
+        }
+
+        function toggleQuoteProduct(productId, checked) {
+            if (checked) {
+                quoteSelection[productId] = { qty: 1, variant: '' };
+                document.getElementById('quote-product-error').classList.add('hidden');
+            } else {
+                delete quoteSelection[productId];
+            }
+            renderQuoteProducts();
+        }
+
+        // Sends a form to Netlify Forms without leaving the page
+        async function submitNetlifyForm(form) {
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(new FormData(form)).toString()
+            });
+            if (!response.ok) throw new Error(`Form submission failed (${response.status})`);
+        }
+
+        async function handleQuoteSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const ids = Object.keys(quoteSelection);
+
+            if (ids.length === 0) {
+                document.getElementById('quote-product-error').classList.remove('hidden');
+                document.getElementById('quote-product-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            document.getElementById('quote-products-field').value = ids.map(id => {
+                const item = findProduct(id);
+                const sel = quoteSelection[id];
+                return `${item.id} – ${item.name}${sel.variant ? ` (${sel.variant})` : ''} × ${sel.qty}`;
+            }).join('\n');
+            document.getElementById('quote-total-field').value = ids.reduce((sum, id) => sum + quoteSelection[id].qty, 0);
+
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true;
+            try {
+                await submitNetlifyForm(form);
+                form.reset();
+                quoteSelection = {};
+                cart = [];
+                updateCartUI();
+                document.getElementById('quote-form-view').classList.add('hidden');
+                document.getElementById('quote-success-view').classList.remove('hidden');
+            } catch (err) {
+                showToast('Sorry, something went wrong sending your request. Please try again.', true);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true;
+            try {
+                await submitNetlifyForm(form);
+                form.reset();
+                showToast('INQUIRY SENT // WE WILL CONTACT YOU SHORTLY.');
+            } catch (err) {
+                showToast('Sorry, something went wrong sending your inquiry. Please try again.', true);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        let toastTimer;
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] px-4 py-3 rounded border font-tactical text-xs shadow-2xl ${isError ? 'bg-red-950 border-red-500 text-red-200' : 'bg-tactical-card border-tactical-highlight text-tactical-highlight'}`;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.add('hidden'), 5000);
+        }
+    </script>
+</body>
+</html>
