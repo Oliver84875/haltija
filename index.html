@@ -2,6 +2,8 @@
         // Catalog Products Data
         let products = [];
 
+        const getElement = (id) => document.getElementById(id);
+
         async function loadProducts() {
             try {
                 const response = await fetch('products.json');
@@ -11,13 +13,15 @@
 
                 products = await response.json();
                 renderCatalog(products);
+
                 if (Object.keys(quoteSelection).length > 0 || cart.length > 0) {
                     renderQuoteProducts();
                 }
+
                 updateCartUI();
             } catch (error) {
                 console.error(error);
-                const container = document.getElementById('product-grid');
+                const container = getElement('product-grid');
                 if (container) {
                     container.innerHTML = `
                         <div class="col-span-full rounded border border-red-500/40 bg-red-500/5 p-6 text-center text-red-300">
@@ -44,11 +48,16 @@
         // Selected products in the quote form: { [id]: { qty, variant } }
         let quoteSelection = {};
 
-        // Initialize Catalog View
-        document.addEventListener('DOMContentLoaded', () => {
+        function initApp() {
             loadProducts();
             updateCartUI();
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
@@ -60,7 +69,8 @@
 
         // Render Catalog Grid Cards
         function renderCatalog(items) {
-            const container = document.getElementById('product-grid');
+            const container = getElement('product-grid');
+            if (!container) return;
             container.innerHTML = '';
 
             items.forEach(item => {
@@ -73,8 +83,8 @@
                             <span class="absolute top-2 left-2 z-10 bg-tactical-black/80 px-2 py-0.5 text-[10px] font-tactical text-tactical-highlight border border-tactical-border">
                                 ${item.id}
                             </span>
-                            ${item.images.length > 1 ? `<span class="absolute top-2 right-2 z-10 bg-tactical-black/80 px-2 py-0.5 text-[10px] font-tactical text-slate-300 border border-tactical-border">MULTI-VIEW</span>` : ''}
-                            <img src="${item.images[0]}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" loading="lazy" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            ${item.images && item.images.length > 1 ? `<span class="absolute top-2 right-2 z-10 bg-tactical-black/80 px-2 py-0.5 text-[10px] font-tactical text-slate-300 border border-tactical-border">MULTI-VIEW</span>` : ''}
+                            <img src="${item.images && item.images[0] ? item.images[0] : PLACEHOLDER(item.id)}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" loading="lazy" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="p-4">
                             <div class="text-[10px] font-tactical text-tactical-tan uppercase mb-1">${item.pattern || 'TACTICAL GEAR'}</div>
@@ -124,16 +134,17 @@
             const item = findProduct(productId);
             if (!item) return;
 
-            const modal = document.getElementById('product-modal');
-            const content = document.getElementById('modal-content');
+            const modal = getElement('product-modal');
+            const content = getElement('modal-content');
+            if (!modal || !content) return;
 
             content.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <div class="bg-white rounded border border-tactical-border p-2 mb-3">
-                            <img id="modal-main-image" src="${item.images[0]}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" class="w-full h-72 object-contain">
+                            <img id="modal-main-image" src="${item.images && item.images[0] ? item.images[0] : PLACEHOLDER(item.id)}" onerror="this.src='${PLACEHOLDER(item.id)}'" alt="${item.name}" class="w-full h-72 object-contain">
                         </div>
-                        ${item.images.length > 1 ? `
+                        ${item.images && item.images.length > 1 ? `
                             <div class="text-xs font-tactical text-tactical-gray mb-1">MORE VIEWS:</div>
                             <div class="grid grid-cols-4 gap-2">
                                 ${item.images.map((src, i) => `
@@ -197,7 +208,9 @@
         }
 
         function setModalImage(src, thumb) {
-            document.getElementById('modal-main-image').src = src;
+            const mainImage = getElement('modal-main-image');
+            if (!mainImage) return;
+            mainImage.src = src;
             document.querySelectorAll('.modal-thumb').forEach(t => {
                 t.classList.remove('border-tactical-highlight');
                 t.classList.add('border-tactical-border');
@@ -207,7 +220,8 @@
         }
 
         function closeProductModal() {
-            const modal = document.getElementById('product-modal');
+            const modal = getElement('product-modal');
+            if (!modal) return;
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
@@ -247,9 +261,11 @@
 
         function updateCartUI() {
             saveCart();
-            const cartContainer = document.getElementById('cart-items');
-            const cartCount = document.getElementById('cart-count');
-            const totalQty = document.getElementById('cart-total-qty');
+            const cartContainer = getElement('cart-items');
+            const cartCount = getElement('cart-count');
+            const totalQty = getElement('cart-total-qty');
+
+            if (!cartContainer || !cartCount || !totalQty) return;
 
             const total = cart.reduce((sum, item) => sum + item.qty, 0);
             cartCount.textContent = total;
@@ -268,9 +284,10 @@
 
             cartContainer.innerHTML = cart.map(entry => {
                 const item = findProduct(entry.id);
+                if (!item) return '';
                 return `
                 <div class="bg-tactical-black p-3 rounded border border-tactical-border flex gap-3 items-center">
-                    <img src="${item.images[0]}" alt="" class="w-14 h-14 object-contain bg-white rounded">
+                    <img src="${item.images && item.images[0] ? item.images[0] : PLACEHOLDER(item.id)}" alt="" class="w-14 h-14 object-contain bg-white rounded">
                     <div class="flex-grow min-w-0">
                         <div class="text-xs text-tactical-highlight font-bold">${item.id}</div>
                         <div class="text-xs text-white font-semibold leading-tight truncate">${item.name}</div>
@@ -289,8 +306,10 @@
         }
 
         function toggleCartDrawer(open) {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-overlay');
+            const drawer = getElement('cart-drawer');
+            const overlay = getElement('cart-overlay');
+            if (!drawer || !overlay) return;
+
             if (typeof open !== 'boolean') {
                 open = drawer.classList.contains('translate-x-full');
             }
@@ -306,7 +325,8 @@
         }
 
         function toggleMobileMenu(open) {
-            const menu = document.getElementById('mobile-menu');
+            const menu = getElement('mobile-menu');
+            if (!menu) return;
             if (typeof open !== 'boolean') open = menu.classList.contains('hidden');
             menu.classList.toggle('hidden', !open);
         }
@@ -322,24 +342,32 @@
                 cart.forEach(c => { quoteSelection[c.id] = { qty: c.qty, variant: '' }; });
             }
 
-            document.getElementById('quote-form-view').classList.remove('hidden');
-            document.getElementById('quote-success-view').classList.add('hidden');
-            document.getElementById('quote-product-error').classList.add('hidden');
+            const formView = getElement('quote-form-view');
+            const successView = getElement('quote-success-view');
+            const errorText = getElement('quote-product-error');
+            if (!formView || !successView || !errorText) return;
+
+            formView.classList.remove('hidden');
+            successView.classList.add('hidden');
+            errorText.classList.add('hidden');
             renderQuoteProducts();
 
-            const modal = document.getElementById('quote-modal');
+            const modal = getElement('quote-modal');
+            if (!modal) return;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
         function closeQuoteModal() {
-            const modal = document.getElementById('quote-modal');
+            const modal = getElement('quote-modal');
+            if (!modal) return;
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
 
         function renderQuoteProducts() {
-            const list = document.getElementById('quote-product-list');
+            const list = getElement('quote-product-list');
+            if (!list) return;
             list.innerHTML = products.map(item => {
                 const sel = quoteSelection[item.id];
                 const checked = Boolean(sel);
@@ -347,7 +375,7 @@
                 <div class="rounded border ${checked ? 'border-tactical-highlight bg-tactical-olive/10' : 'border-tactical-border bg-tactical-black'} p-2.5 flex flex-wrap items-center gap-3 transition-colors">
                     <label class="flex items-center gap-3 flex-grow min-w-[200px] cursor-pointer">
                         <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleQuoteProduct('${item.id}', this.checked)" class="w-4 h-4 accent-[#8da832]">
-                        <img src="${item.images[0]}" alt="" class="w-12 h-12 object-contain bg-white rounded">
+                        <img src="${item.images && item.images[0] ? item.images[0] : PLACEHOLDER(item.id)}" alt="" class="w-12 h-12 object-contain bg-white rounded">
                         <span>
                             <span class="block text-[10px] text-tactical-highlight font-bold">${item.id}</span>
                             <span class="block text-xs text-white font-semibold leading-tight">${item.name}</span>
@@ -384,18 +412,23 @@
             event.preventDefault();
             const selected = Object.entries(quoteSelection).map(([id, value]) => ({ id, qty: value.qty }));
             if (!selected.length) {
-                document.getElementById('quote-product-error').classList.remove('hidden');
+                const errorText = getElement('quote-product-error');
+                if (errorText) errorText.classList.remove('hidden');
                 return;
             }
 
-            document.getElementById('quote-products-field').value = JSON.stringify(selected);
-            document.getElementById('quote-total-field').value = String(selected.reduce((sum, item) => sum + item.qty, 0));
+            const productsField = getElement('quote-products-field');
+            const totalField = getElement('quote-total-field');
+            if (productsField) productsField.value = JSON.stringify(selected);
+            if (totalField) totalField.value = String(selected.reduce((sum, item) => sum + item.qty, 0));
 
             const form = event.target;
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SENDING...';
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SENDING...';
+            }
 
             fetch('/', {
                 method: 'POST',
@@ -403,18 +436,23 @@
                 body: new URLSearchParams(formData).toString()
             })
             .then(() => {
-                document.getElementById('quote-form-view').classList.add('hidden');
-                document.getElementById('quote-success-view').classList.remove('hidden');
+                const formView = getElement('quote-form-view');
+                const successView = getElement('quote-success-view');
+                if (formView) formView.classList.add('hidden');
+                if (successView) successView.classList.remove('hidden');
             })
             .catch(() => {
                 showToast('Unable to send request right now. Please email sales@haltijatactical.com.', 'error');
-                submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>SEND QUOTE REQUEST</span>';
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>SEND QUOTE REQUEST</span>';
+                }
             });
         }
 
         function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
+            const toast = getElement('toast');
+            if (!toast) return;
             toast.textContent = message;
             toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] px-4 py-3 rounded border font-tactical text-xs shadow-2xl ${type === 'error' ? 'bg-red-500/20 border-red-400 text-red-200' : 'bg-tactical-olive/20 border-tactical-highlight text-tactical-highlight'}`;
             toast.classList.remove('hidden');
@@ -425,8 +463,10 @@
             event.preventDefault();
             const form = event.target;
             const button = form.querySelector('button[type="submit"]');
-            button.disabled = true;
-            button.textContent = 'SENDING...';
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'SENDING...';
+            }
 
             fetch('/', {
                 method: 'POST',
@@ -441,8 +481,10 @@
                 showToast('Failed to send inquiry. Try again or email sales@haltijatactical.com.', 'error');
             })
             .finally(() => {
-                button.disabled = false;
-                button.textContent = 'SEND OFFICIAL INQUIRY';
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = 'SEND OFFICIAL INQUIRY';
+                }
             });
         }
     </script>
